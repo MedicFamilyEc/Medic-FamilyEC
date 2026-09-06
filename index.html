@@ -380,14 +380,14 @@ footer{background:#123e50;color:#dff5fb;text-align:center;padding:20px;font-size
             alert("El carrito está vacío");
             return;
         }
-        let message = "Hola, me gustaría realizar el siguiente pedido:\n\n";
+        let message = "Hola, me gustaría realizar el siguiente pedido de Medic Family EC:\n\nFACTURA DE COMPRA\n";
         let total = 0;
         cart.forEach(item => {
             let subtotal = item.price * item.qty;
             total += subtotal;
-            message += `- ${item.qty}x ${item.name} ($${subtotal.toFixed(2)})\n`;
+            message += `- ${item.name} (x${item.qty}) - $${subtotal.toFixed(2)}\n`;
         });
-        message += `\nTotal a pagar: $${total.toFixed(2)}`;
+        message += `\nTOTAL A PAGAR: $${total.toFixed(2)}\n\nQuedo atento a la confirmación.`;
         window.open(`https://wa.me/593979703470?text=${encodeURIComponent(message)}`, '_blank');
     }
 
