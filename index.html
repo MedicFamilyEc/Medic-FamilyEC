@@ -200,11 +200,10 @@ footer{background:#123e50;color:#dff5fb;text-align:center;padding:20px;font-size
         <input id="search" placeholder="🔎 Buscar producto..." oninput="resetAndFilter()">
         <select id="filter" onchange="resetAndFilter()">
             <option value="all">Todas las categorías</option>
-            <option value="kit">Kit</option>
-            <option value="estetoscopio">Estetoscopio</option>
+            <option value="kit">Kit Médicos</option>
             <option value="prácticas">Prácticas</option>
             <option value="accesorios">Accesorios</option>
-            <option value="equipos médicos">Equipos médicos</option>
+            <option value="equipos medicos">Equipos Médicos</option>
         </select>
     </div>
     
@@ -279,13 +278,42 @@ footer{background:#123e50;color:#dff5fb;text-align:center;padding:20px;font-size
 <script>
     // Listado completo de los 33 productos
     const productsData = [
+
+        // ==========================================
+        // CATEGORÍA: KITS
+        // ==========================================
         { name: "Layard médicos", cat: "accesorios", price: 2.75, desc: "Layard médicos c/u", img: "img/layard-medicos.png" }, 
         { name: "Kit Básico Azul", cat: "kit", price: 16.00, desc: "Tensiómetro manual + estetoscopio de una campana + bolsito.", img: "img/kit-basico-azul.png" },
         { name: "Kit Color Gris", cat: "kit", price: 20.00, desc: "Tensiómetro manual + estetoscopio doble campana + bolsito.", img: "img/kit-color-gris.png" },
         { name: "Kit Deluxe", cat: "kit", price: 35.00, desc: "Tensiómetro manual + estetoscopio doble campana + bolsito. Gratis linterna.", img: "img/kit-deluxe.png" },
         { name: "Tablero de Plastico", cat: "prácticas", price: 6.75, desc: "Colores: Rosa, Verde menta, Celeste", img: "img/tablero-plastico.png" },
+        { name: "Kit de diagnostico", cat: "kit", price: 34.75, desc: "Colores: Rosado, negro, púrpura", img: "img/kit-diagnostico.png" },
         { name: "Kit Profesional", cat: "kit", price: 75.00, desc: "Tensiómetro manual + estetoscopio doble campana + reloj + tijera + linterna.", img: "img/kit-profesional.png" },
-      //  { name: "Estetoscopio Clínico", cat: "estetoscopio", price: 26.75, desc: "Estetoscopio doble campana. Colores rosa, púrpura, blanco y negro.", img: "img/estetoscopio-clinico.png" },
+        { name: "Kit Completo / Safe Medic", cat: "kit", price: 49.00, desc: `Colores: púrpura, fucsia y negro
+Incluye: Tensiometro manual, Estetoscopio doble campana, termómetro digital, torniquete, tijera corta todo, Bolsito.
+Obsequio: linterna de Examinacion y esfero`, img: "img/kit-completo-safe-medic.png" },
+         // ==========================================
+        // CATEGORÍA: ACCESORIOS
+        // ==========================================
+        
+        { name: "Reloj para bolsillo", cat: "accesorios", price: 10.00, desc: "Reloj enfermera de solapa tipo broche.", img: "img/reloj-para-bolsillo.png" },
+        { name: "Dispensador de gel 1 oz", cat: "accesorios", price: 2.00, desc: "Dispensador de gel desinfectante de 1 oz.", img: "img/dispensador-de-alcohol-1oz.png" },
+        { name: "Porta credencial con collar", cat: "accesorios", price: 3.80, desc: "Porta credencial con collar y diseños variados.", img: "img/porta-credenciales-para-bolsillo.png" },
+        { name: "Porta credencial con collar", cat: "accesorios", price: 3.80, desc: "Porta credencial con collar y diseños variados.", img: "img/porta-credenciales-para-bolsillo.png" },
+        { name: "Bolso Paramedico", cat: "accesorios", price: 20.00, desc: "Colores: Gris y rojo", img: "img/bolso-paramedico.png" },
+        { name: "Cinta Metrica", cat: "accesorios", price: 4.00, desc: "Con diseño de flores", img: "img/cinta-metrica-con-diseño-de-flores.png" },
+        { name: "Dispensador de gel 1 oz con llavero", cat: "accesorios", price: 2.50, desc: "Colores: Rosa, celeste y verde", img: "img/dispensador-de-alcohol-1oz-con-llavero.png" },
+        { name: "Dispensadores de alcohol medianos", cat: "accesorios", price: 4.40, desc: "", img: "img/dispensadores-de-alcohol-medianos.png" },
+        
+        // ==========================================
+        // CATEGORÍA: PRACTICAS
+        // ==========================================
+    
+        // ==========================================
+        // CATEGORÍA: EQUIPOS MEDICOS
+        // ==========================================
+        { name: "Estetoscopio Clínico", cat: "equipo medico", price: 26.75, desc: "Estetoscopio doble campana. Colores rosa, púrpura, blanco y negro.", img: "img/estetoscopio-clinico.png" },
+        { name: "Caja Organizadora Pequeña", cat: "equipos medicos", price: 6.50, desc: "Material de Plastico", img: "img/caja-organizadora-pequeña.png" },
       //  { name: "Kit Deluxe — Tensiómetro + Termómetro", cat: "kit", price: 36.75, desc: "Tensiómetro manual + estetoscopio doble campana + termómetro digital. Gratis linterna.", img: "img/kit-deluxe-tensiometro-termometro.png" },
       //  { name: "Kit Tensiómetro + Oxímetro", cat: "kit", price: 46.75, desc: "Tensiómetro manual + estetoscopio doble campana + oxímetro + bolsito.", img: "img/kit-tensiometro-oximetro.png" },
       //  { name: "Kit con dispensador y termómetro", cat: "kit", price: 38.99, desc: "Tensiómetro manual + estetoscopio + dispensador de alcohol + termómetro.", img: "img/kit-con-dispensador-y-termometro.png" },
@@ -306,21 +334,11 @@ footer{background:#123e50;color:#dff5fb;text-align:center;padding:20px;font-size
       //  { name: "Pad de sutura + 9 piezas", cat: "prácticas", price: 25.50, desc: "Pad de sutura completo con 9 piezas de instrumentos quirúrgicos.", img: "img/pad-de-sutura-9-piezas.png" },
       //  { name: "Pad de sutura + 12 piezas", cat: "prácticas", price: 28.50, desc: "Pad de sutura avanzado con 12 piezas.", img: "img/pad-de-sutura-12-piezas.png" },
       //  { name: "Estuche médico pequeño", cat: "accesorios", price: 21.90, desc: "Estuche organizador médico portátil.", img: "img/estuche-medico-pequeno.png" },
-        { name: "Reloj para bolsillo", cat: "accesorios", price: 10.00, desc: "Reloj enfermera de solapa tipo broche.", img: "img/reloj-para-bolsillo.png" },
       //  { name: "Dispensador de alcohol + termómetro", cat: "accesorios", price: 24.45, desc: "Dispensador de alcohol portátil y termómetro digital.", img: "img/dispensador-de-alcohol-termometro.png" },
       //  { name: "Organizador de bolsillo + accesorios", cat: "accesorios", price: 0, desc: "Organizador de bolsillo, rompe ampolla y tijera.", img: "img/organizador-de-bolsillo-accesorios.png" },
-        { name: "Dispensador de gel 1 oz", cat: "accesorios", price: 2.00, desc: "Dispensador de gel desinfectante de 1 oz.", img: "img/dispensador-de-alcohol-1oz.png" },
       //  { name: "Oxímetro", cat: "equipos médicos", price: 29.50, desc: "Oxímetro de pulso digital de alta precisión.", img: "img/oximetro.png" },
-        { name: "Porta credencial con collar", cat: "accesorios", price: 3.80, desc: "Porta credencial con collar y diseños variados.", img: "img/porta-credenciales-para-bolsillo.png" },
       //  { name: "Porta credencial + cinta métrica + oxímetro", cat: "accesorios", price: 33.25, desc: "Kit completo de accesorios para credencial y medición.", img: "img/porta-credencial-cinta-metrica-oximetro.png" },
-        { name: "Bolso Paramedico", cat: "accesorios", price: 20.00, desc: "Colores: Gris y rojo", img: "img/bolso-paramedico.png" },
-        { name: "Caja Organizadora Pequeña", cat: "equipos médicos", price: 6.50, desc: "Material de Plastico", img: "img/caja-organizadora-pequeña.png" },
-        { name: "Cinta Metrica", cat: "accesorios", price: 4.00, desc: "Con diseño de flores", img: "img/cinta-metrica-con-diseño-de-flores.png" },
-        { name: "Dispensador de gel 1 oz con llavero", cat: "accesorios", price: 2.50, desc: "Colores: Rosa, celeste y verde", img: "img/dispensador-de-alcohol-1oz-con-llavero.png" },
-        { name: "Dispensadores de alcohol medianos", cat: "accesorios", price: 4.40, desc: "", img: "img/dispensadores-de-alcohol-medianos.png" },
-        { name: "Kit Completo / Safe Medic", cat: "kit", price: 49.00, desc: `Colores: púrpura, fucsia y negro
-Incluye: Tensiometro manual, Estetoscopio doble campana, termómetro digital, torniquete, tijera corta todo, Bolsito.
-Obsequio: linterna de Examinacion y esfero`, img: "img/kit-completo-safe-medic.png" }
+    
    ];
 
     let currentPage = 1;
