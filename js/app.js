@@ -80,7 +80,7 @@ function checkoutWhatsApp() {
     window.open(`https://wa.me/593979703470?text=${encodeURIComponent(message)}`, '_blank');
 }
 
-// Modal de Detalle de Producto Mejorado con soporte para múltiples imágenes o desglose
+// Modal de Detalle de Producto Mejorado con soporte para galería y descripciones dinámicas
 function openProductModalById(id) {
     const product = productsData.find(p => p.id === id);
     if (!product) return;
@@ -102,65 +102,39 @@ function openProductModalById(id) {
         document.body.appendChild(modalOverlay);
     }
 
-    // Generamos las miniaturas de la galería y permitimos cambiar la foto y el texto dinámicamente
     let galleryHTML = '';
+    let initialImg = product.img;
+    let initialText = product.desc;
+
     if (product.gallery && product.gallery.length > 0) {
+        const firstItem = product.gallery[0];
+        initialImg = (typeof firstItem === 'object') ? firstItem.src : firstItem;
+        initialText = (typeof firstItem === 'object') ? firstItem.text : product.desc;
+
         galleryHTML = `
             <div style="margin: 12px 0;">
                 <p style="font-size: 0.9rem; font-weight: bold; color: #475569; margin-bottom: 6px;">Elementos incluidos:</p>
                 <div style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px;">
-                    ${product.gallery.map(item => `
-                        <img src="${item.src}" style="width: 70px; height: 70px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e1; cursor: pointer;" 
-                            onclick="document.getElementById('mainModalImg').src='${item.src}'; document.getElementById('modalItemDesc').textContent='${item.text}';">
-                    `).join('')}
+                    ${product.gallery.map(item => {
+                        const imgSrc = (typeof item === 'object') ? item.src : item;
+                        const imgText = (typeof item === 'object') ? item.text : product.desc;
+                        return `<img src="${imgSrc}" style="width: 70px; height: 70px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e1; cursor: pointer;" onclick="document.getElementById('mainModalImg').src='${imgSrc}'; document.getElementById('modalItemDesc').innerText=decodeURIComponent('${encodeURIComponent(imgText)}');">`;
+                    }).join('')}
                 </div>
             </div>
         `;
     }
 
-    // Texto inicial (si tiene galería, muestra el texto del primer elemento, sino la descripción general)
-    const initialText = (product.gallery && product.gallery.length > 0) ? product.gallery[0].text : product.desc;
-
     const modalBody = document.getElementById('modalBody');
     modalBody.innerHTML = `
         <div style="text-align: center;">
-            <img id="mainModalImg" src="${product.gallery && product.gallery.length > 0 ? product.gallery[0].src : product.img}" style="width:100%; max-height:200px; object-fit:contain; background:#ffffff; border-radius:8px; padding: 10px; border: 1px solid #f1f5f9;" alt="${product.name}">
+            <img id="mainModalImg" src="${initialImg}" style="width:100%; max-height:200px; object-fit:contain; background:#ffffff; border-radius:8px; padding: 10px; border: 1px solid #f1f5f9;" alt="${product.name}">
         </div>
         ${galleryHTML}
         <span class="tag" style="display:block; margin-top:10px;">${product.cat}</span>
         <h2 style="margin: 5px 0; color: #1e293b; font-size: 1.3rem;">${product.name}</h2>
         <p style="font-size: 1.2rem; font-weight: bold; color: var(--a); margin: 8px 0;">$${Number(product.price).toFixed(2)}</p>
         <p id="modalItemDesc" style="color: #64748b; font-size: 0.95rem; line-height: 1.4; white-space: pre-line; margin-bottom: 20px;">${initialText}</p>
-        <button onclick="addToCartById(${product.id}); closeProductModal();" style="width:100%; background:var(--v); color:white; border:none; padding:12px; border-radius:8px; font-weight:bold; cursor:pointer; font-size: 1rem;">Agregar al Carrito</button>
-    `;
-
-    modalOverlay.classList.add('active');
-}
-    // Si el producto tiene una propiedad 'gallery' (array de imágenes adicionales), las mostramos
-    let galleryHTML = '';
-    if (product.gallery && product.gallery.length > 0) {
-        galleryHTML = `
-            <div style="margin: 12px 0;">
-                <p style="font-size: 0.9rem; font-weight: bold; color: #475569; margin-bottom: 6px;">Otras vistas / Elementos incluidos:</p>
-                <div style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px;">
-                    ${product.gallery.map(imgSrc => `
-                        <img src="${imgSrc}" style="width: 70px; height: 70px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e1; cursor: pointer;" onclick="document.getElementById('mainModalImg').src='${imgSrc}'">
-                    `).join('')}
-                </div>
-            </div>
-        `;
-    }
-
-    const modalBody = document.getElementById('modalBody');
-    modalBody.innerHTML = `
-        <div style="text-align: center;">
-            <img id="mainModalImg" src="${product.img}" style="width:100%; max-height:220px; object-fit:contain; background:#ffffff; border-radius:8px; padding: 10px; border: 1px solid #f1f5f9;" alt="${product.name}">
-        </div>
-        ${galleryHTML}
-        <span class="tag" style="display:block; margin-top:10px;">${product.cat}</span>
-        <h2 style="margin: 5px 0; color: #1e293b; font-size: 1.3rem;">${product.name}</h2>
-        <p style="font-size: 1.2rem; font-weight: bold; color: var(--a); margin: 8px 0;">$${Number(product.price).toFixed(2)}</p>
-        <p style="color: #64748b; font-size: 0.95rem; line-height: 1.4; white-space: pre-line; margin-bottom: 20px;">${product.desc}</p>
         <button onclick="addToCartById(${product.id}); closeProductModal();" style="width:100%; background:var(--v); color:white; border:none; padding:12px; border-radius:8px; font-weight:bold; cursor:pointer; font-size: 1rem;">Agregar al Carrito</button>
     `;
 
@@ -245,6 +219,10 @@ function renderCatalog() {
         }
     }
 }
+
+window.onload = function() {
+    renderCatalog();
+};
 
 window.onload = function() {
     renderCatalog();
