@@ -107,6 +107,7 @@ function openProductModalById(id) {
     let initialSubText = "";
 
     if (product.gallery && product.gallery.length > 0) {
+        // Tomamos el primer elemento por defecto
         const firstItem = product.gallery[0];
         initialImg = (typeof firstItem === 'object') ? firstItem.src : firstItem;
         initialSubText = (typeof firstItem === 'object') ? firstItem.text : "";
@@ -118,7 +119,11 @@ function openProductModalById(id) {
                     ${product.gallery.map(item => {
                         const imgSrc = (typeof item === 'object') ? item.src : item;
                         const imgText = (typeof item === 'object') ? item.text : "";
-                        return `<img src="${imgSrc}" style="width: 70px; height: 70px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e1; cursor: pointer;" onclick="document.getElementById('mainModalImg').src='${imgSrc}'; document.getElementById('modalItemDesc').innerText='${imgText}';">`;
+                        
+                        // Si el src está vacío, no renderizamos la miniatura rota
+                        if (!imgSrc || imgSrc.trim() === "") return '';
+
+                        return `<img src="${imgSrc}" style="width: 70px; height: 70px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e1; cursor: pointer; flex-shrink: 0;" onclick="document.getElementById('mainModalImg').src='${imgSrc}'; document.getElementById('modalItemDesc').innerText='${imgText}';">`;
                     }).join('')}
                 </div>
             </div>
