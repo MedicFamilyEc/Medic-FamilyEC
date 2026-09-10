@@ -92,11 +92,11 @@ function openProductModalById(id) {
         modalOverlay.className = 'modal-overlay';
         modalOverlay.innerHTML = `
             <div class="product-modal-content">
-                <div class="cart-header">
-                    <h2>Detalle del Producto</h2>
+                <div class="cart-header" style="padding-bottom: 10px;">
+                    <h2 style="font-size: 1.1rem;">Detalle del Producto</h2>
                     <button class="close-modal" onclick="closeProductModal()">×</button>
                 </div>
-                <div id="modalBody" style="margin-top: 15px;"></div>
+                <div id="modalBody" style="margin-top: 10px;"></div>
             </div>
         `;
         document.body.appendChild(modalOverlay);
@@ -107,23 +107,20 @@ function openProductModalById(id) {
     let initialSubText = "";
 
     if (product.gallery && product.gallery.length > 0) {
-        // Tomamos el primer elemento por defecto
         const firstItem = product.gallery[0];
         initialImg = (typeof firstItem === 'object') ? firstItem.src : firstItem;
         initialSubText = (typeof firstItem === 'object') ? firstItem.text : "";
 
         galleryHTML = `
-            <div style="margin: 12px 0;">
-                <p style="font-size: 0.9rem; font-weight: bold; color: #475569; margin-bottom: 6px;">Elementos incluidos:</p>
-                <div style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px;">
+            <div style="margin: 8px 0;">
+                <p style="font-size: 0.8rem; font-weight: bold; color: #475569; margin-bottom: 4px;">Elementos incluidos:</p>
+                <div style="display: flex; gap: 6px; overflow-x: auto; padding-bottom: 3px;">
                     ${product.gallery.map(item => {
                         const imgSrc = (typeof item === 'object') ? item.src : item;
                         const imgText = (typeof item === 'object') ? item.text : "";
-                        
-                        // Si el src está vacío, no renderizamos la miniatura rota
                         if (!imgSrc || imgSrc.trim() === "") return '';
 
-                        return `<img src="${imgSrc}" style="width: 70px; height: 70px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e1; cursor: pointer; flex-shrink: 0;" onclick="document.getElementById('mainModalImg').src='${imgSrc}'; document.getElementById('modalItemDesc').innerText='${imgText}';">`;
+                        return `<img src="${imgSrc}" style="width: 55px; height: 55px; object-fit: cover; border-radius: 5px; border: 1px solid #cbd5e1; cursor: pointer; flex-shrink: 0;" onclick="document.getElementById('mainModalImg').src='${imgSrc}'; document.getElementById('modalItemDesc').innerText='${imgText}';">`;
                     }).join('')}
                 </div>
             </div>
@@ -133,15 +130,15 @@ function openProductModalById(id) {
     const modalBody = document.getElementById('modalBody');
     modalBody.innerHTML = `
         <div style="text-align: center;">
-            <img id="mainModalImg" src="${initialImg}" style="width:100%; max-height:200px; object-fit:contain; background:#ffffff; border-radius:8px; padding: 10px; border: 1px solid #f1f5f9;" alt="${product.name}">
-            <p id="modalItemDesc" style="color: #0284c7; font-size: 0.9rem; font-weight: 600; margin-top: 8px; min-height: 20px;">${initialSubText}</p>
+            <img id="mainModalImg" src="${initialImg}" style="width:100%; max-height:140px; object-fit:contain; background:#ffffff; border-radius:6px; padding: 5px; border: 1px solid #f1f5f9;" alt="${product.name}">
+            <p id="modalItemDesc" style="color: #0284c7; font-size: 0.82rem; font-weight: 600; margin: 4px 0 0 0; min-height: 16px;">${initialSubText}</p>
         </div>
         ${galleryHTML}
-        <span class="tag" style="display:block; margin-top:10px;">${product.cat}</span>
-        <h2 style="margin: 5px 0; color: #1e293b; font-size: 1.3rem;">${product.name}</h2>
-        <p style="font-size: 1.2rem; font-weight: bold; color: var(--a); margin: 8px 0;">$${Number(product.price).toFixed(2)}</p>
-        <p style="color: #64748b; font-size: 0.95rem; line-height: 1.4; white-space: pre-line; margin-bottom: 20px;">${product.desc}</p>
-        <button onclick="addToCartById(${product.id}); closeProductModal();" style="width:100%; background:var(--v); color:white; border:none; padding:12px; border-radius:8px; font-weight:bold; cursor:pointer; font-size: 1rem;">Agregar al Carrito</button>
+        <span class="tag" style="display:block; margin-top:4px; font-size: 11px;">${product.cat}</span>
+        <h2 style="margin: 2px 0; color: #1e293b; font-size: 1.15rem;">${product.name}</h2>
+        <p style="font-size: 1.05rem; font-weight: bold; color: var(--a); margin: 4px 0;">$${Number(product.price).toFixed(2)}</p>
+        <p style="color: #64748b; font-size: 0.88rem; line-height: 1.3; white-space: pre-line; margin-bottom: 12px; max-height: 90px; overflow-y: auto; padding-right: 4px;">${product.desc}</p>
+        <button onclick="addToCartById(${product.id}); closeProductModal();" style="width:100%; background:var(--v); color:white; border:none; padding:10px; border-radius:8px; font-weight:bold; cursor:pointer; font-size: 0.95rem;">Agregar al Carrito</button>
     `;
 
     modalOverlay.classList.add('active');
