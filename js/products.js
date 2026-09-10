@@ -1,5 +1,5 @@
 const productsData = [
-    { id: 1, name: "Kit Básico Azul", cat: "kit", price: 16.00, desc: "Incluye: Tensiómetro manual + estetoscopio de una campana + bolsito.", img: "img/kit-basico-azul.png" },
+    { id: 1, name: "Kit Básico Azul", cat: "kit", price: 16.00, desc: "Incluye: Tensiómetro manual + estetoscopio de una campana + bolsito.", img: "img/kit-basico-azul.png", gallery: ["img/tensiometro-azul.png", "img/estetoscopio-azul.png", "img/bolsito-azul.png"], 
     { id: 2, name: "Kit Color Gris", cat: "kit", price: 20.00, desc: "Incluye: Tensiómetro manual + estetoscopio doble campana + bolsito.", img: "img/kit-color-gris.png" },
     { id: 3, name: "Kit Deluxe", cat: "kit", price: 35.00, desc: "Colores: Fucsia, Negro, Azul, Celeste y Conchovino.\nIncluye: Tensiómetro manual + estetoscopio doble campana + bolsito. Gratis linterna.", img: "img/kit-deluxe.png" },
     { id: 4, name: "Kit de diagnostico", cat: "kit", price: 34.75, desc: "Colores: Rosado, negro, púrpura.\nIncluye: Tensiometro manual + estetoscopio Pro + torniquete elástico + tijera corta todo + Bolsito", img: "img/kit-diagnostico.png" },
